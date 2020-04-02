@@ -1,7 +1,8 @@
 import TODO_API from './endPoints';
 
-export async function get(){
-    const response = await fetch(TODO_API);
+export async function get(resource){
+    const url = `${ TODO_API }${ resource ? resource: ""}`;
+    const response = await fetch(url);
     return response;
 }
 

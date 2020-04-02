@@ -5,44 +5,60 @@ import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import { get } from '../../../service/requests';
+import  { useDispatch } from 'react-redux';
+import 
+{ 
+  ADD_TODO,
+  REMOVE_ALL_TODOS,
+  ACTIVES_TODOS,
+  ALL_TODOS,
+  DONE_TODOS
+} from '../../../Actions/Todos';
 
-function BottomList(props){
+function BottomList(){
   const [value, setValue] = useState(0);
+  const dispatch = useDispatch();
 
-  async function loadTodos(setTodos){
-    const response = await get();
-    const todosJson = await response.json();
-    setTodos(todosJson);
-
-  }
-
-  async function loadTodosDone(setTodos){
-    const response = await get();
-    const todosJson = await response.json();
-    setTodos(todosJson.filter(todo => todo.done === false));
+  async function loadTodos(){
+    const response = await get("");
+    const data = await response.json();
+    dispatch({type:REMOVE_ALL_TODOS});
+    addTodo(data);
 
   }
 
-  async function loadTodosActive(setTodos){
-    const response = await get();
-    const todosJson = await response.json();
-    setTodos(todosJson.filter(todo => todo.done === true));
-
+  async function loadTodosDone(){
+    const response = await get("/done");
+    const data = await response.json();
+    dispatch({type:REMOVE_ALL_TODOS})
+    addTodo(data);
   }
 
+  async function loadTodosActive(){
+    const response = await get("/actives");
+    const data = await response.json();
+    dispatch({type:REMOVE_ALL_TODOS})
+    addTodo(data);
+  }
 
+  function addTodo(todos){
+    todos.map(todo => dispatch({type:ADD_TODO, todo:todo}));
+  }
 
   const handleChange = async (event, newValue) => {
     setValue(newValue);
     switch(newValue){
       case 2:
-          await loadTodosDone(props.todos.setTodo);
+          dispatch({type:ACTIVES_TODOS});
+          await loadTodosActive();
           break;
       case 1:
-        await loadTodosActive(props.todos.setTodo);
+        dispatch({type:DONE_TODOS});
+        await loadTodosDone();
         break;
-      case 0:
-          await loadTodos(props.todos.setTodo);
+      default:
+          dispatch({type:ALL_TODOS});
+          await loadTodos();
         break
     }
   }

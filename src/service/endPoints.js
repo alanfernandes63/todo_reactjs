@@ -1,5 +1,5 @@
 
-const TODO_API = 'http://192.168.0.10:8080/api/v1/todos';
+const TODO_API = 'http://localhost:8080/api/v1/todos';
 
 export default TODO_API;
 
