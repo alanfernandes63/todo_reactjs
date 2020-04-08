@@ -7,7 +7,7 @@ export async function get(resource){
 }
 
 export async function put(id, done){
-    const response = await fetch(`${TODO_API}?id=${id}&done=${done}`,
+    const response = await fetch(`${TODO_API}/${id}?done=${done}`,
         {
             method:'PUT',
             headers:{
@@ -29,6 +29,6 @@ export async function post(todo){
 }
 
 export async function serviceDelete(id){
-    const response = await fetch(`${TODO_API}?id=${id}`, { method:'DELETE'})
+    const response = await fetch(`${TODO_API}/${id}`, { method:'DELETE'})
     return response;
 }
