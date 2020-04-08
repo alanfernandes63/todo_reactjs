@@ -19,7 +19,7 @@ function ListTodos(){
 
     useEffect(() => {
      async function loadTodos(){
-        const response = await get();
+        const response = await get("?type=all");
         const data = await response.json();
         data.map((todo) => dispatch({type:ADD_TODO, todo}));
         setLoading(false);

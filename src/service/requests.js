@@ -1,7 +1,7 @@
 import TODO_API from './endPoints';
 
 export async function get(resource){
-    const url = `${ TODO_API }${ resource ? resource: ""}`;
+    const url = `${ TODO_API }${ resource }`;
     const response = await fetch(url);
     return response;
 }
