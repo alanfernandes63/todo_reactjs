@@ -20,7 +20,7 @@ function BottomList(){
   const dispatch = useDispatch();
 
   async function loadTodos(){
-    const response = await get("");
+    const response = await get("?type=all");
     const data = await response.json();
     dispatch({type:REMOVE_ALL_TODOS});
     addTodo(data);
@@ -28,14 +28,14 @@ function BottomList(){
   }
 
   async function loadTodosDone(){
-    const response = await get("/done");
+    const response = await get("?type=done");
     const data = await response.json();
     dispatch({type:REMOVE_ALL_TODOS})
     addTodo(data);
   }
 
   async function loadTodosActive(){
-    const response = await get("/actives");
+    const response = await get("?type=active");
     const data = await response.json();
     dispatch({type:REMOVE_ALL_TODOS})
     addTodo(data);
