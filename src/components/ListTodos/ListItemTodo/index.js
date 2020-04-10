@@ -8,14 +8,16 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import { serviceDelete, put } from '../../../service/requests';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
-import { REMOVE_TODO } from '../../../Actions/Todos';
-import { useDispatch } from 'react-redux';
+import { REMOVE_TODO, DONE_TODOS, ACTIVES_TODOS } from '../../../Actions/Todos';
+import { useDispatch, useSelector } from 'react-redux';
 
 function ListItemTodo({todo}){
 
     const [id] = useState(todo.id);
     const [isDone, setIsDone] = useState(todo.done);
     const dispatch = useDispatch();
+    const store = useSelector(state => state);
+    const todosType = store.TodosType;
 
     useEffect(()=>{
     },[]);
@@ -29,7 +31,17 @@ function ListItemTodo({todo}){
     async function doneTodo(){
         const response = await put(id, !isDone);
         const todo = await response.json();
-        setIsDone(todo.done);
+        if(response.ok){
+            if(todo.done && todosType.type === ACTIVES_TODOS){
+                dispatch({type:REMOVE_TODO, todo});
+            }
+            else if(!todo.done && todosType.type === DONE_TODOS){
+                dispatch({type:REMOVE_TODO, todo});
+            }
+            else{
+                setIsDone(todo.done);
+            }
+        }
     }
 
     return(
