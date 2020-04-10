@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
@@ -16,6 +16,9 @@ function ListItemTodo({todo}){
     const [id] = useState(todo.id);
     const [isDone, setIsDone] = useState(todo.done);
     const dispatch = useDispatch();
+
+    useEffect(()=>{
+    },[]);
 
     async function deleteTodo(){
         const response = await serviceDelete(id);
