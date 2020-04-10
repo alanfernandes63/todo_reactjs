@@ -11,10 +11,10 @@ import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import { REMOVE_TODO } from '../../../Actions/Todos';
 import { useDispatch } from 'react-redux';
 
-function ListItemTodo(todo){
+function ListItemTodo({todo}){
 
-    const [id] = useState(todo.todo.id);
-    const [isDone, setIsDone] = useState(todo.todo.done);
+    const [id] = useState(todo.id);
+    const [isDone, setIsDone] = useState(todo.done);
     const dispatch = useDispatch();
 
     async function deleteTodo(){
@@ -38,7 +38,7 @@ function ListItemTodo(todo){
                     </Avatar>
                 </Grid>
                 <Grid item xs={7} sm={8} md={8}>
-                    <ListItemText key={todo.todo.id} primary={todo.todo.name}/>
+                    <ListItemText key={todo.id} primary={todo.name}/>
                 </Grid>
                 <Grid item xs={2} sm={2} md={2}>
                     <IconButton onClick={ deleteTodo }>
